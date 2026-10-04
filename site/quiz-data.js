@@ -13,41 +13,41 @@ globalThis.TechQuiz = (() => {
   ];
   const a = (text, main, related) => ({ text, main, related });
   const questions = [
-    { title: 'Your group is organising a school event. Which part would you most enjoy?', answers: [
-      a('Finding out what people want to do.', 'research', 'data'),
-      a('Making the information clear and easy to follow.', 'ux', 'support'),
-      a('Getting the equipment working.', 'systems', 'dev'),
-      a('Planning how everything fits together.', 'architect', 'security')
+    { title: 'Your group is making a display for school. Which part would you choose?', answers: [
+      a("Asking other pupils what they'd find interesting.", 'research', 'ux'),
+      a('Arranging the words and pictures so the display is easy to follow.', 'ux', 'support'),
+      a('Getting the lights, sound or moving parts working.', 'systems', 'dev'),
+      a("Working out how everyone's pieces will fit into one display.", 'architect', 'systems')
     ] },
-    { title: 'You are helping create a new game. What sounds most interesting?', answers: [
-      a('Building a feature and trying it out.', 'dev', 'ux'),
-      a('Looking at scores to see which levels need changing.', 'data', 'research'),
-      a('Checking how to keep players’ accounts safe.', 'security', 'architect'),
-      a('Helping a player who cannot get started.', 'support', 'systems')
+    { title: "You're trying out a new game with friends. What would you most enjoy?", answers: [
+      a('Making up a new rule and testing how it changes the game.', 'dev', 'systems'),
+      a('Comparing the scores to see whether any round is too hard.', 'data', 'ux'),
+      a('Finding gaps in the rules that someone could use to cheat.', 'security', 'dev'),
+      a("Helping someone who's stuck work out their next move.", 'support', 'research')
     ] },
-    { title: 'A club wants more people to join. What would you like to try?', answers: [
-      a('Making a clearer poster or sign-up page.', 'ux', 'dev'),
-      a('Asking people what would make them want to join.', 'research', 'support'),
-      a('Planning how bookings, spaces and activities will work together.', 'architect', 'systems'),
-      a('Comparing which activities have been most popular.', 'data', 'security')
+    { title: 'Your class can suggest a school trip. Which part interests you most?', answers: [
+      a('Making a guide so everyone can find the times and meeting places.', 'ux', 'support'),
+      a("Asking classmates what they'd like to do and why.", 'research', 'ux'),
+      a('Working out how the journey, activities and breaks fit into the day.', 'architect', 'systems'),
+      a('Comparing costs and travel times to help choose a destination.', 'data', 'architect')
     ] },
-    { title: 'Your team is testing a new app. Which task would you pick?', answers: [
-      a('Tracking down why it stops working on one device.', 'systems', 'architect'),
-      a('Helping someone through a step they are stuck on.', 'support', 'research'),
-      a('Checking that private messages stay private.', 'security', 'data'),
-      a('Making a new feature work.', 'dev', 'ux')
+    { title: "You're working on a group project. Which task would you pick?", answers: [
+      a('Working out why a model or piece of equipment has stopped working.', 'systems', 'dev'),
+      a("Helping a teammate through a step they're finding difficult.", 'support', 'research'),
+      a("Checking that photos or personal details won't be shared with the wrong people.", 'security', 'architect'),
+      a('Making a quiz where each answer sends the player to a different question.', 'dev', 'architect')
     ] },
-    { title: 'You have a free afternoon for a project. What would you choose?', answers: [
-      a('Making a small interactive story or game.', 'dev', 'architect'),
-      a('Trying different ways to make instructions easier to follow.', 'ux', 'research'),
-      a('Exploring a puzzle where you need to spot something unusual.', 'security', 'systems'),
-      a('Helping someone learn to use a tool or gadget.', 'support', 'data')
+    { title: "Imagine you're helping make an escape room challenge. What sounds most fun?", answers: [
+      a('Creating a puzzle and trying it out to see whether it works.', 'dev', 'systems'),
+      a('Changing the clues so players understand what they need to do.', 'ux', 'support'),
+      a('Checking whether players could get the final answer without solving the clues.', 'security', 'dev'),
+      a('Giving a stuck player a hint that helps them carry on.', 'support', 'ux')
     ] },
-    { title: 'At the end of a team project, what would feel most satisfying?', answers: [
-      a('We understood what people actually needed.', 'research', 'ux'),
-      a('We found a pattern that helped us make a decision.', 'data', 'dev'),
-      a('All the different parts worked well together.', 'architect', 'support'),
-      a('We fixed a tricky problem and kept things running.', 'systems', 'security')
+    { title: 'Your school is trying out lunchtime activities. Which job would you choose?', answers: [
+      a('Talking to pupils about what they enjoyed and what put them off.', 'research', 'ux'),
+      a('Looking at attendance numbers to spot which activities bring people back.', 'data', 'research'),
+      a('Planning how activities can share rooms and equipment without clashing.', 'architect', 'systems'),
+      a('Finding out why equipment keeps failing and trying a fix.', 'systems', 'data')
     ] }
   ];
   function match(answers) {

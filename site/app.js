@@ -21,7 +21,7 @@
           <p class="lead">Discover a job you could enjoy, and how you could help people in Wirral.</p>
           <ul class="facts"><li>6 questions</li><li>About 2 minutes</li></ul>
           <button class="button" id="start">Start the quiz <span aria-hidden="true">→</span></button>
-          <p class="small intro-note">Just pick what sounds most like you.</p>
+          <p class="small intro-note">Pick the part you'd most enjoy. You don't need to have done it before. There are no right or wrong answers.</p>
         </section>
         <aside class="intro-aside" aria-labelledby="tech-heading">
           <h2 id="tech-heading">Tech that helps people</h2>
@@ -41,7 +41,7 @@
       <form novalidate>
         <fieldset aria-describedby="question-hint">
           <legend><h1>${question.title}</h1></legend>
-          <p class="hint" id="question-hint">Choose the one that sounds most like you.</p>
+          <p class="hint" id="question-hint">Pick the part you'd most enjoy.</p>
           <p class="error" id="answer-error" role="alert" hidden>Choose an answer to continue.</p>
           <div class="answers">${question.answers.map((answer, i) => `
             <label class="answer"><input type="radio" name="answer" value="${i}" ${answers[step] === i ? 'checked' : ''}><span>${answer.text}</span></label>`).join('')}</div>

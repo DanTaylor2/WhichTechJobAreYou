@@ -15,10 +15,13 @@ test('all 4,096 answer combinations produce distinct, reachable role matches', (
   }
   assert.equal(winners.size, 8);
 });
-test('each role has equal primary and secondary coverage', () => {
+test('each role has equal primary coverage and every related role is valid and distinct', () => {
   for (const role of roles) {
     assert.equal(questions.flatMap(q => q.answers).filter(a => a.main === role.id).length, 3);
-    assert.equal(questions.flatMap(q => q.answers).filter(a => a.related === role.id).length, 3);
+  }
+  for (const answer of questions.flatMap(q => q.answers)) {
+    assert.ok(roles.some(role => role.id === answer.related));
+    assert.notEqual(answer.main, answer.related);
   }
 });
 test('incomplete and invalid answers cannot be scored', () => {
