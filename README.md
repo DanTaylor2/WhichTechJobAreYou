@@ -14,9 +14,9 @@ Before the event, try the quiz on the actual laptop and monitor arrangement, and
 
 ## Deploy to GitHub Pages
 
-1. Put this project in a GitHub repository with a `main` branch.
+1. Put this project in a GitHub repository with a `master` branch.
 2. In the repository, open **Settings → Pages → Build and deployment** and select **GitHub Actions** as the source.
-3. Push to `main`, or run **Test and deploy GitHub Pages** from the Actions tab.
+3. Push to `master`, or run **Test and deploy GitHub Pages** from the Actions tab.
 
 The workflow tests the matching logic and browser experience, then publishes only the `site` folder. Pull requests run the tests without deploying. All asset paths are relative, so a repository URL such as `https://YOUR-ACCOUNT.github.io/WhichTechJobAreYou/` works without configuration. If your default branch has a different name, update both branch references in `.github/workflows/deploy.yml`.
 

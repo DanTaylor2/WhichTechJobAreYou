@@ -1,7 +1,7 @@
 name: Test and deploy GitHub Pages
 on:
   push:
-    branches: [main]
+    branches: [master]
   pull_request:
   workflow_dispatch:
 permissions:
@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
@@ -23,7 +23,7 @@ jobs:
       - run: npx playwright install --with-deps chromium
       - run: npm run test:browser
   deploy:
-    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/master'
     needs: test
     runs-on: ubuntu-latest
     permissions:
