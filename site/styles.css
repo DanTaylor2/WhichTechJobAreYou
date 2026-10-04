@@ -1,6 +1,6 @@
 :root { --ink: #0b0c0c; --muted: #505a5f; --border: #b1b4b6; --brand-dark: #35702e; --brand-hover: #285523; --focus: #ffdd00; --brand: #428b39; }
 * { box-sizing: border-box; }
-body { margin: 0; color: var(--ink); background: #fff; font-family: Arial, Helvetica, sans-serif; font-size: 19px; line-height: 1.5; }
+body { min-height: 100vh; display: flex; flex-direction: column; margin: 0; color: var(--ink); background: #fff; font-family: Arial, Helvetica, sans-serif; font-size: 19px; line-height: 1.5; }
 .container { width: min(100% - 64px, 1000px); margin-inline: auto; }
 a { color: var(--brand-dark); text-underline-offset: 3px; }
 a:hover { text-decoration-thickness: 3px; }
@@ -11,7 +11,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible { outline: 3px soli
 .header-inner { display: flex; align-items: center; justify-content: space-between; padding-block: 20px; gap: 16px; }
 .council { font-size: 30px; font-weight: 700; letter-spacing: -1px; }
 .header-label { font-size: 18px; }
-main { min-height: 66vh; padding-block: 38px 56px; }
+main { flex: 1 0 auto; padding-block: 38px 56px; }
 main:focus, h1:focus { outline: none; }
 h1 { margin: 0 0 24px; font-size: clamp(32px, 4.2vw, 48px); line-height: 1.12; letter-spacing: -1px; }
 h2 { font-size: 25px; line-height: 1.25; margin: 0 0 12px; }
