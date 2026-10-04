@@ -16,13 +16,12 @@
     main.innerHTML = `
       <div class="intro">
         <section>
-          <p class="eyebrow">A place for your interests</p>
+          <p class="eyebrow">Weatherhead Careers Fair</p>
           <h1>Which tech job<br>are you?</h1>
-          <p class="lead">People who listen. People who create. People who love solving problems. There is more than one way to work in tech.</p>
-          <p>Discover a job you could enjoy, and how you could help people in Wirral.</p>
+          <p class="lead">Discover a job you could enjoy, and how you could help people in Wirral.</p>
           <ul class="facts"><li>6 questions</li><li>About 2 minutes</li></ul>
           <button class="button" id="start">Start the quiz <span aria-hidden="true">→</span></button>
-          <p class="small intro-note">No tech knowledge needed. There are no right or wrong answers. Just pick what sounds most like you.</p>
+          <p class="small intro-note">Just pick what sounds most like you.</p>
         </section>
         <aside class="intro-aside" aria-labelledby="tech-heading">
           <h2 id="tech-heading">Tech that helps people</h2>
@@ -88,7 +87,6 @@
           <div class="example"><h2>At a council, you could...</h2><p>${role.example}</p></div>
         </section>
         <aside>
-          <div class="ask"><h2>Ask us at the stand</h2><p>“${role.ask}”</p></div>
           <h2>You could also explore</h2>
           <ul class="alternatives">${alternatives.map(other => `<li><strong>${other.title}</strong>${other.short}</li>`).join('')}</ul>
         </aside>
@@ -100,16 +98,12 @@
     main.querySelector('#change').addEventListener('click', () => { step = 0; showQuestion(); });
     focusHeading();
   }
+  document.querySelector('#copyright-year').textContent = new Date().getFullYear();
   showHome(false);
   // The cache contains only public site files. Answers stay in this closure.
   if ('serviceWorker' in navigator && location.protocol !== 'file:') {
-    navigator.serviceWorker.register('./sw.js').then(async () => {
-      await navigator.serviceWorker.ready;
-      document.querySelector('#offline-status').textContent = 'Ready to use offline on this laptop.';
-    }).catch(() => {
-      document.querySelector('#offline-status').textContent = 'Offline copy not ready. Keep this tab open or use the downloaded version.';
+    navigator.serviceWorker.register('./sw.js').catch(error => {
+      console.warn('Offline cache registration failed.', error);
     });
-  } else if (location.protocol === 'file:') {
-    document.querySelector('#offline-status').textContent = 'Using the local offline version.';
   }
 })();

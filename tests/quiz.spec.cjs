@@ -38,7 +38,6 @@ test('quiz validates, preserves edits, explains results and clears for the next 
 });
 test('cached project site reloads and finishes without a connection', async ({ page, context }) => {
   await page.goto('/WhichTechJobAreYou/');
-  await expect(page.getByRole('status')).toHaveText('Ready to use offline on this laptop.');
   await page.evaluate(() => navigator.serviceWorker.ready);
   await page.waitForFunction(() => !!navigator.serviceWorker.controller);
   await context.setOffline(true);
@@ -49,7 +48,6 @@ test('cached project site reloads and finishes without a connection', async ({ p
 });
 test('downloaded site works directly from disk with no server', async ({ page }) => {
   await page.goto(pathToFileURL(path.resolve('site/index.html')).href);
-  await expect(page.getByRole('status')).toHaveText('Using the local offline version.');
   await page.getByRole('button', { name: 'Start the quiz' }).click();
   await complete(page);
   await expect(page.getByRole('button', { name: 'Next person' })).toBeVisible();

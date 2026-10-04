@@ -1,12 +1,12 @@
 # Which tech job are you?
 
-A Wirral Council careers-fair quiz for pupils in years 7 to 11. Six short questions take around two minutes and suggest one public-sector tech career, two alternatives and a question to ask the team at the stand.
+A Wirral Council careers-fair quiz for pupils in years 7 to 11. Six short questions take around two minutes and suggest one public-sector tech career and two alternatives.
 
 ## Run it at the event
 
 There are no production dependencies or external assets. Copy the entire `site` folder onto each laptop, then open `site/index.html` in a browser. This works without internet access or a local server. Keep the files together.
 
-For the hosted version, open the GitHub Pages URL on each laptop while online. Wait for **Ready to use offline on this laptop** in the footer before disconnecting. The service worker caches the site files, so the page can reload offline in that browser. Browser storage clearing or private browsing can remove the cache; keep the downloaded folder as the event backup.
+For the hosted version, open the GitHub Pages URL on each laptop while online. Before the event, disconnect and reload to verify the offline copy is ready. The service worker caches the site files, so the page can reload offline in that browser. Browser storage clearing or private browsing can remove the cache; keep the downloaded folder as the event backup.
 
 Use browser full-screen mode for the stand. Pupils can use touch, mouse or keyboard. Select **Next person** after each result to clear the answers and return to the start. **Start again** clears an unfinished quiz. Reloading also clears answers. There is no automatic timeout while a pupil is reading.
 
@@ -47,7 +47,7 @@ Edit the eight role profiles and six questions in `site/quiz-data.js`. Each choi
 
 Answers live only in page memory. The app has no analytics, forms that submit data, cookies, accounts or answer storage. The offline cache stores public site files only. GitHub Pages provides the hosting and may maintain its own request logs.
 
-The layout follows GDS conventions for typography, buttons, radio groups, focus states and plain language. It uses an Arial system font and a text-only Wirral Council identity, with no external fonts or copied government crest. The teal palette is a project design choice, not a claim to reproduce the council's official brand guidelines.
+The layout follows GDS conventions for typography, buttons, radio groups, focus states and plain language. It uses an Arial system font and a text-only Wirral Council identity, with no external fonts or copied government crest. The palette uses the green from [Wirral Council's website](https://www.wirral.gov.uk/), with darker shades for text contrast. The Council favicon is saved locally in `site/favicon.ico`.
 
 When changing any site files, increment the cache version in `site/sw.js`. An updated service worker activates after tabs using the old version close. Before an event, reconnect, close old quiz tabs, reopen the site and check the updated content.
 
