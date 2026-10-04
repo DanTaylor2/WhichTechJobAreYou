@@ -21,13 +21,7 @@
           <p class="lead">Discover a job you could enjoy, and how you could help people in Wirral.</p>
           <ul class="facts"><li>6 questions</li><li>About 2 minutes</li></ul>
           <button class="button" id="start">Start the quiz <span aria-hidden="true">→</span></button>
-          <p class="small intro-note">Pick the part you'd most enjoy. You don't need to have done it before. There are no right or wrong answers.</p>
         </section>
-        <aside class="intro-aside" aria-labelledby="tech-heading">
-          <h2 id="tech-heading">Tech that helps people</h2>
-          <p>At a council, technology is part of everyday life. You could help:</p>
-          <ul><li>Make council services easier to use.</li><li>Keep libraries connected.</li><li>Protect people’s information.</li><li>Use data to improve local services.</li></ul>
-        </aside>
       </div>`;
     main.querySelector('#start').addEventListener('click', () => showQuestion());
     if (focus) focusHeading();
@@ -92,7 +86,6 @@
         </aside>
       </div>
       <p class="result-note">This is a starting point. You can explore any of these jobs.</p>
-      <p class="small">Want to remember your match? You can take a photo of this screen.</p>
       <div class="actions"><button class="button" id="next-person">Next person <span aria-hidden="true">→</span></button><button class="text-button" id="change">Change my answers</button></div>`;
     main.querySelector('#next-person').addEventListener('click', () => showHome());
     main.querySelector('#change').addEventListener('click', () => { step = 0; showQuestion(); });
