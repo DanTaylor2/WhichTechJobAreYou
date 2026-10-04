@@ -47,7 +47,7 @@ Edit the eight role profiles and six questions in `site/quiz-data.js`. Each choi
 
 Answers live only in page memory. The app has no analytics, forms that submit data, cookies, accounts or answer storage. The offline cache stores public site files only. GitHub Pages provides the hosting and may maintain its own request logs.
 
-The layout follows GDS conventions for typography, buttons, radio groups, focus states and plain language. It uses an Arial system font and a text-only Wirral Council identity, with no external fonts or copied government crest. The palette uses the green from [Wirral Council's website](https://www.wirral.gov.uk/), with darker shades for text contrast. The Council favicon is saved locally in `site/favicon.ico`.
+The layout follows GDS conventions for typography, buttons, radio groups, focus states and plain language. It uses an Arial system font and the official Wirral Council logo, with no external fonts or copied government crest. The palette uses the green from [Wirral Council's website](https://www.wirral.gov.uk/), with darker shades for text contrast. The Council favicon is saved locally in `site/favicon.ico`.
 
 When changing any site files, increment the cache version in `site/sw.js`. An updated service worker activates after tabs using the old version close. Before an event, reconnect, close old quiz tabs, reopen the site and check the updated content.
 

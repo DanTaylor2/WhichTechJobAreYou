@@ -9,7 +9,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible { outline: 3px soli
 .skip-link:focus { top: 8px; }
 .header { background: var(--brand-dark); color: white; border-bottom: 8px solid var(--brand); }
 .header-inner { display: flex; align-items: center; justify-content: space-between; padding-block: 20px; gap: 16px; }
-.council { font-size: 30px; font-weight: 700; letter-spacing: -1px; }
+.council-logo { display: block; width: min(240px, 55vw); height: auto; }
 .header-label { font-size: 18px; }
 main { flex: 1 0 auto; padding-block: 38px 56px; }
 main:focus, h1:focus { outline: none; }
@@ -68,7 +68,7 @@ input[type=radio]:focus { outline: none; }
 @media (max-width: 700px) {
   .container { width: calc(100% - 32px); }
   .header-inner { padding-block: 16px; }
-  .council { font-size: 25px; }
+  .council-logo { width: min(210px, 52vw); }
   .header-label { font-size: 15px; }
   main { padding-block: 28px 40px; }
   .intro, .result-grid { grid-template-columns: 1fr; gap: 28px; }
