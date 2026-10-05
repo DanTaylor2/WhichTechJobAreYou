@@ -1,4 +1,5 @@
-/* Each answer gives three points to its main role and one to a related role.
+/* Each scored answer gives three points to its main role and one to a related role.
+   Not sure answers give no points.
    Every role is a main role exactly three times across the six questions. */
 globalThis.TechQuiz = (() => {
   const roles = [
@@ -13,62 +14,70 @@ globalThis.TechQuiz = (() => {
   ];
   const a = (text, main, related) => ({ text, main, related });
   const questions = [
-    { title: 'Your group is making a display for school. Which part would you choose?', answers: [
-      a("Asking other pupils what they'd find interesting.", 'research', 'ux'),
-      a('Arranging the words and pictures so the display is easy to follow.', 'ux', 'support'),
-      a('Getting the lights, sound or moving parts working.', 'systems', 'dev'),
-      a("Working out how everyone's pieces will fit into one display.", 'architect', 'systems')
+    { title: 'Your group is making a display about keeping the school clean. Which job would you choose?', answers: [
+      a("Ask pupils what they'd like to know 🗣️", 'research', 'ux'),
+      a('Arrange words and pictures so they are clear 🎨', 'ux', 'support'),
+      a('Set up the lights or sound 🔧', 'systems', 'dev'),
+      a('Plan how all the parts fit together 🧩', 'architect', 'systems'),
+      { text: 'Not sure yet 🤔', unsure: true }
     ] },
-    { title: "You're trying out a new game with friends. What would you most enjoy?", answers: [
-      a('Making up a new rule and testing how it changes the game.', 'dev', 'systems'),
-      a('Comparing the scores to see whether any round is too hard.', 'data', 'ux'),
-      a('Finding gaps in the rules that someone could use to cheat.', 'security', 'dev'),
-      a("Helping someone who's stuck work out their next move.", 'support', 'research')
+    { title: "You're trying a new board game with friends. Which job would you choose to help make it better?", answers: [
+      a('Invent and test a new rule 💡', 'dev', 'systems'),
+      a('Compare scores to spot tricky rounds 📊', 'data', 'ux'),
+      a('Check how someone might cheat 🔒', 'security', 'dev'),
+      a('Help a friend who is stuck 🙋', 'support', 'research'),
+      { text: 'Not sure yet 🤔', unsure: true }
     ] },
-    { title: 'Your class can suggest a school trip. Which part interests you most?', answers: [
-      a('Making a guide so everyone can find the times and meeting places.', 'ux', 'support'),
-      a("Asking classmates what they'd like to do and why.", 'research', 'ux'),
-      a('Working out how the journey, activities and breaks fit into the day.', 'architect', 'systems'),
-      a('Comparing costs and travel times to help choose a destination.', 'data', 'architect')
+    { title: 'Your class is choosing a school trip. Which job would help the class pick and plan it?', answers: [
+      a('Make a clear trip guide 🗺️', 'ux', 'support'),
+      a("Ask classmates what they'd enjoy 🗣️", 'research', 'ux'),
+      a('Plan the journey and stops 🧩', 'architect', 'systems'),
+      a('Compare prices and travel times 📊', 'data', 'architect'),
+      { text: 'Not sure yet 🤔', unsure: true }
     ] },
-    { title: "You're working on a group project. Which task would you pick?", answers: [
-      a('Working out why a model or piece of equipment has stopped working.', 'systems', 'dev'),
-      a("Helping a teammate through a step they're finding difficult.", 'support', 'research'),
-      a("Checking that photos or personal details won't be shared with the wrong people.", 'security', 'architect'),
-      a('Making a quiz where each answer sends the player to a different question.', 'dev', 'architect')
+    { title: "Your group is making a model for a class project. Which job would you choose?", answers: [
+      a('Find out why a part has stopped working 🔧', 'systems', 'dev'),
+      a('Help a teammate with a tricky step 🙋', 'support', 'research'),
+      a('Keep photos and names private 🔒', 'security', 'architect'),
+      a('Make a quiz that works 💻', 'dev', 'architect'),
+      { text: 'Not sure yet 🤔', unsure: true }
     ] },
-    { title: "Imagine you're helping make an escape room challenge. What sounds most fun?", answers: [
-      a('Creating a puzzle and trying it out to see whether it works.', 'dev', 'systems'),
-      a('Changing the clues so players understand what they need to do.', 'ux', 'support'),
-      a('Checking whether players could get the final answer without solving the clues.', 'security', 'dev'),
-      a('Giving a stuck player a hint that helps them carry on.', 'support', 'ux')
+    { title: "Your class is making a simple escape room with clues and puzzles. Which job sounds fun?", answers: [
+      a('Make and test a puzzle 💡', 'dev', 'systems'),
+      a('Make the clues easy to follow 🎨', 'ux', 'support'),
+      a('Check if a clue can be skipped 🔒', 'security', 'dev'),
+      a('Give a helpful hint 🙋', 'support', 'ux'),
+      { text: 'Not sure yet 🤔', unsure: true }
     ] },
-    { title: 'Your school is trying out lunchtime activities. Which job would you choose?', answers: [
-      a('Talking to pupils about what they enjoyed and what put them off.', 'research', 'ux'),
-      a('Looking at attendance numbers to spot which activities bring people back.', 'data', 'research'),
-      a('Planning how activities can share rooms and equipment without clashing.', 'architect', 'systems'),
-      a('Finding out why equipment keeps failing and trying a fix.', 'systems', 'data')
+    { title: 'Your school is planning lunchtime clubs. Which job would help the clubs run well?', answers: [
+      a('Ask pupils what they enjoy 🗣️', 'research', 'ux'),
+      a('Check which clubs are most popular 📊', 'data', 'research'),
+      a('Plan rooms and equipment 🧩', 'architect', 'systems'),
+      a('Fix equipment that stops working 🔧', 'systems', 'data'),
+      { text: 'Not sure yet 🤔', unsure: true }
     ] }
   ];
   function match(answers) {
-    if (answers.length !== questions.length || answers.some((answer, i) => !Number.isInteger(answer) || !questions[i].answers[answer])) {
+    if (!Array.isArray(answers) || answers.length !== questions.length || questions.some((question, i) => !Number.isInteger(answers[i]) || !question.answers[answers[i]])) {
       throw new Error('Complete all six questions before matching.');
     }
     const scores = Object.fromEntries(roles.map(role => [role.id, 0]));
     const primary = Object.fromEntries(roles.map(role => [role.id, 0]));
     answers.forEach((answer, i) => {
       const choice = questions[i].answers[answer];
+      if (choice.unsure) return;
       scores[choice.main] += 3;
       scores[choice.related] += 1;
       primary[choice.main]++;
     });
     // Rotate the final tie order using the answers, rather than always favouring
     // the first role. No randomness or personal information is needed.
-    const offset = answers.reduce((value, answer) => value * 5 + answer + 1, 0) % roles.length;
-    const ranked = [...roles].sort((left, right) => scores[right.id] - scores[left.id]
+    const offset = answers.reduce((value, answer, i) => questions[i].answers[answer].unsure
+      ? value : value * 5 + answer + 1, 0) % roles.length;
+    const ranked = roles.filter(role => scores[role.id] > 0).sort((left, right) => scores[right.id] - scores[left.id]
       || primary[right.id] - primary[left.id]
       || (roles.indexOf(left) + offset) % roles.length - (roles.indexOf(right) + offset) % roles.length);
-    return { main: ranked[0], alternatives: ranked.slice(1, 3), scores };
+    return { main: ranked[0] ?? null, alternatives: ranked.slice(1, 3), scores };
   }
   return { roles, questions, match };
 })();

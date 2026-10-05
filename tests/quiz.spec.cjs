@@ -11,6 +11,37 @@ async function complete(page) {
 async function accessible(page) {
   expect((await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze()).violations).toEqual([]);
 }
+test('unsure answers allow exploring jobs, editing into a match and resetting', async ({ page }) => {
+  await page.goto('/');
+  await page.getByRole('button', { name: 'Start the quiz' }).click();
+  for (let i = 0; i < 6; i++) {
+    await page.getByRole('radio', { name: 'Not sure yet' }).check();
+    await page.getByRole('button', { name: i === 5 ? 'See my match' : 'Continue' }).click();
+  }
+  await expect(page.getByRole('heading', { name: 'Explore tech jobs' })).toBeFocused();
+  await expect(page.locator('.alternatives li')).toHaveCount(8);
+  await expect(page.getByRole('heading', { name: 'Why this could suit you' })).toHaveCount(0);
+  await accessible(page);
+  await page.getByRole('button', { name: 'Change my answers' }).click();
+  await expect(page.getByRole('radio', { name: 'Not sure yet' })).toBeChecked();
+  await page.getByRole('radio').first().check();
+  for (let i = 0; i < 6; i++) {
+    await page.getByRole('button', { name: i === 5 ? 'See my match' : 'Continue' }).click();
+  }
+  await expect(page.getByRole('heading', { name: 'User researcher', exact: true })).toBeVisible();
+  await expect(page.locator('.alternatives li')).toHaveCount(1);
+  await expect(page.locator('.alternatives')).toContainText('UX designer');
+  await accessible(page);
+  await page.getByRole('button', { name: 'Change my answers' }).click();
+  await page.getByRole('radio', { name: 'Not sure yet' }).check();
+  for (let i = 0; i < 6; i++) {
+    await page.getByRole('button', { name: i === 5 ? 'See my match' : 'Continue' }).click();
+  }
+  await expect(page.getByRole('heading', { name: 'Explore tech jobs' })).toBeVisible();
+  await page.getByRole('button', { name: 'Next person' }).click();
+  await page.getByRole('button', { name: 'Start the quiz' }).click();
+  await expect(page.locator('input:checked')).toHaveCount(0);
+});
 test('quiz validates, preserves edits, explains results and clears for the next pupil', async ({ page }) => {
   await page.goto('/WhichTechJobAreYou/');
   await accessible(page);

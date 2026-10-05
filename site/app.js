@@ -33,9 +33,8 @@
       <div class="question-top"><p>Question ${step + 1} of ${questions.length}</p><button class="text-button" id="restart">Start again</button></div>
       <div class="progress" aria-hidden="true"><span style="width: ${(step + 1) / questions.length * 100}%"></span></div>
       <form novalidate>
-        <fieldset aria-describedby="question-hint">
+        <fieldset>
           <legend><h1>${question.title}</h1></legend>
-          <p class="hint" id="question-hint">Pick the part you'd most enjoy.</p>
           <p class="error" id="answer-error" role="alert" hidden>Choose an answer to continue.</p>
           <div class="answers">${question.answers.map((answer, i) => `
             <label class="answer"><input type="radio" name="answer" value="${i}" ${answers[step] === i ? 'checked' : ''}><span>${answer.text}</span></label>`).join('')}</div>
@@ -52,14 +51,14 @@
       answers[step] = Number(event.target.value);
       main.querySelector('#answer-error').hidden = true;
       main.querySelector('fieldset').classList.remove('invalid');
-      main.querySelector('fieldset').setAttribute('aria-describedby', 'question-hint');
+      main.querySelector('fieldset').removeAttribute('aria-describedby');
     });
     form.addEventListener('submit', event => {
       event.preventDefault();
       if (answers[step] === undefined) {
         main.querySelector('#answer-error').hidden = false;
         main.querySelector('fieldset').classList.add('invalid');
-        main.querySelector('fieldset').setAttribute('aria-describedby', 'question-hint answer-error');
+        main.querySelector('fieldset').setAttribute('aria-describedby', 'answer-error');
         main.querySelector('input').focus();
         return;
       }
@@ -70,8 +69,8 @@
   }
   function showResult() {
     const { main: role, alternatives } = match(answers);
-    document.title = `${role.title} | Your tech job match`;
-    main.innerHTML = `
+    document.title = role ? `${role.title} | Your tech job match` : 'Explore tech jobs | Wirral Council';
+    main.innerHTML = (role ? `
       <div class="result-heading"><p>You could enjoy being a</p><h1>${role.title}</h1></div>
       <div class="result-grid">
         <section aria-label="About your match">
@@ -86,7 +85,12 @@
         </aside>
       </div>
       <p class="result-note">This is a starting point. You can explore any of these jobs.</p>
-      <p class="career-link">Find out more about this career and other options on the <a href="https://nationalcareers.service.gov.uk/explore-careers">National Careers Service</a>.</p>
+      <p class="career-link">Find out more about this career and other options on the <a href="https://nationalcareers.service.gov.uk/explore-careers">National Careers Service</a>.</p>` : `
+      <h1>Explore tech jobs</h1>
+      <p>You chose “Not sure yet” for every question, so we don't have a job match for you yet. That's OK!</p>
+      <p>Take a look at these jobs, or change your answers to find a match.</p>
+      <ul class="alternatives">${roles.map(other => `<li><strong>${other.title}</strong>${other.short}</li>`).join('')}</ul>
+      `) + `
       <div class="actions"><button class="button" id="next-person">Next person <span aria-hidden="true">→</span></button><button class="text-button" id="change">Change my answers</button></div>`;
     main.querySelector('#next-person').addEventListener('click', () => showHome());
     main.querySelector('#change').addEventListener('click', () => { step = 0; showQuestion(); });

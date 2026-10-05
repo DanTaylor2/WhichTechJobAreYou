@@ -1,6 +1,6 @@
 # Which tech job are you?
 
-A Wirral Council careers-fair quiz for pupils in years 7 to 13. Six short questions take around two minutes and suggest one public-sector tech career and two alternatives.
+A Wirral Council careers-fair quiz for pupils in years 7 to 13. Six short questions take around two minutes and suggest one public-sector tech career and up to two alternatives.
 
 ## Run it at the event
 
@@ -39,11 +39,11 @@ npx playwright install chromium
 npm run test:browser
 ```
 
-The unit tests check all 4,096 answer combinations, role coverage and invalid inputs. Browser tests cover validation, editing answers, resetting between pupils, keyboard navigation, touch layouts, accessibility checks with axe, offline reloads and opening the downloaded site directly from disk. Automated accessibility checks do not replace testing with assistive technology.
+The unit tests check all 15,625 answer combinations, including unsure answers, score totals, supported matches, role coverage, ties and invalid inputs. Browser tests cover validation, editing answers, resetting between pupils, keyboard navigation, touch layouts, accessibility checks with axe, offline reloads and opening the downloaded site directly from disk. Automated accessibility checks do not replace testing with assistive technology.
 
 ## Content and matching
 
-Edit the eight role profiles and six questions in `site/quiz-data.js`. Each choice awards three points to a primary role and one point to a related role. Every role appears three times as a primary choice across the quiz. Related roles reflect the interest in each answer, so their frequency varies. The shared question set uses school and everyday situations without requiring previous tech experience. The result is the role with the most points, followed by two alternatives. Ties use primary-choice counts and then a deterministic ordering derived from the answers. This is an exploratory activity, not a validated careers assessment; it makes no aptitude or suitability claim.
+Edit the eight role profiles and six questions in `site/quiz-data.js`. Each scored choice awards three points to a primary role and one point to a related role. Every role appears three times as a primary choice across the quiz. Related roles reflect the interest in each answer, so their frequency varies. The shared question set uses school and everyday situations without requiring previous tech experience. “Not sure yet” awards no points. The result is the role with the most points, followed by up to two alternatives that also received points. If every answer is unsure, the result invites pupils to explore all eight jobs or change their answers, without claiming a match. Ties use primary-choice counts and then a deterministic ordering derived from the scored answers. Unsure answers do not affect that ordering. This is an exploratory activity, not a validated careers assessment; it makes no aptitude or suitability claim.
 
 Answers live only in page memory. The app has no analytics, forms that submit data, cookies, accounts or answer storage. The offline cache stores public site files only. GitHub Pages provides the hosting and may maintain its own request logs.
 
