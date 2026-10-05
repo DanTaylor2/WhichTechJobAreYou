@@ -74,25 +74,27 @@
       <div class="result-heading"><p>You could enjoy being a</p><h1>${role.title}</h1></div>
       <div class="result-grid">
         <section aria-label="About your match">
+          <h2>${role.explanationHeading}</h2>
           <p>${role.description}</p>
           <h2>Why this could suit you</h2>
-          <p>Your choices suggest you enjoy ${role.strength}. Those interests can help in this job.</p>
-          <div class="example"><h2>At a council, you could...</h2><p>${role.example}</p></div>
+          <p>Your answers show you might like ${role.strength}. This could help you in this job.</p>
+          <div class="example"><h2>At Wirral Council, you could...</h2><p>${role.example}</p></div>
         </section>
         <aside>
-          <h2>You could also explore</h2>
+          <img class="job-photo" src="${role.image}" alt="${role.imageAlt}" width="800" height="450">
+          <h2>Other jobs you might like</h2>
           <ul class="alternatives">${alternatives.map(other => `<li><strong>${other.title}</strong>${other.short}</li>`).join('')}</ul>
         </aside>
       </div>
-      <p class="result-note">This is a starting point. You can explore any of these jobs.</p>
-      <p class="career-link">Find out more about this career and other options on the <a href="https://nationalcareers.service.gov.uk/explore-careers">National Careers Service</a>.</p>` : `
+      <p class="result-note">This is just one idea. You can try any of these jobs.</p>
+      <p class="career-link">Learn more about this job and other jobs on the <a href="https://nationalcareers.service.gov.uk/explore-careers">National Careers Service</a>.</p>` : `
       <h1>Explore tech jobs</h1>
-      <p>You chose “Not sure yet” for every question, so we don't have a job match for you yet. That's OK!</p>
-      <p>Take a look at these jobs, or change your answers to find a match.</p>
+      <p>You chose “Not sure yet” each time. That's OK! We need to know more to suggest a job.</p>
+      <p>Look at these jobs, or change your answers to find one you might like.</p>
       <ul class="alternatives">${roles.map(other => `<li><strong>${other.title}</strong>${other.short}</li>`).join('')}</ul>
       `) + `
-      <div class="actions"><button class="button" id="next-person">Next person <span aria-hidden="true">→</span></button><button class="text-button" id="change">Change my answers</button></div>`;
-    main.querySelector('#next-person').addEventListener('click', () => showHome());
+      <div class="actions"><button class="button" id="finish">Finish</button><button class="text-button" id="change">Change my answers</button></div>`;
+    main.querySelector('#finish').addEventListener('click', () => showHome());
     main.querySelector('#change').addEventListener('click', () => { step = 0; showQuestion(); });
     focusHeading();
   }

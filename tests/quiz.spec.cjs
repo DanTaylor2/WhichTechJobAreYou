@@ -38,7 +38,7 @@ test('unsure answers allow exploring jobs, editing into a match and resetting', 
     await page.getByRole('button', { name: i === 5 ? 'See my match' : 'Continue' }).click();
   }
   await expect(page.getByRole('heading', { name: 'Explore tech jobs' })).toBeVisible();
-  await page.getByRole('button', { name: 'Next person' }).click();
+  await page.getByRole('button', { name: 'Finish' }).click();
   await page.getByRole('button', { name: 'Start the quiz' }).click();
   await expect(page.locator('input:checked')).toHaveCount(0);
 });
@@ -63,7 +63,7 @@ test('quiz validates, preserves edits, explains results and clears for the next 
   await page.getByRole('button', { name: 'Start again' }).click();
   await page.getByRole('button', { name: 'Start the quiz' }).click();
   await complete(page);
-  await page.getByRole('button', { name: 'Next person' }).click();
+  await page.getByRole('button', { name: 'Finish' }).click();
   await page.getByRole('button', { name: 'Start the quiz' }).click();
   await expect(page.locator('input:checked')).toHaveCount(0);
   expect(await page.evaluate(() => ({ local: localStorage.length, session: sessionStorage.length, cookie: document.cookie }))).toEqual({ local: 0, session: 0, cookie: '' });
@@ -76,13 +76,13 @@ test('cached project site reloads and finishes without a connection', async ({ p
   await page.reload();
   await page.getByRole('button', { name: 'Start the quiz' }).click();
   await complete(page);
-  await expect(page.getByRole('button', { name: 'Next person' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Finish' })).toBeVisible();
 });
 test('downloaded site works directly from disk with no server', async ({ page }) => {
   await page.goto(pathToFileURL(path.resolve('site/index.html')).href);
   await page.getByRole('button', { name: 'Start the quiz' }).click();
   await complete(page);
-  await expect(page.getByRole('button', { name: 'Next person' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Finish' })).toBeVisible();
 });
 test('keyboard users can complete the quiz', async ({ page }) => {
   await page.goto('/');
@@ -95,7 +95,7 @@ test('keyboard users can complete the quiz', async ({ page }) => {
     await page.keyboard.press('Tab');
     await page.keyboard.press('Enter');
   }
-  await expect(page.getByRole('button', { name: 'Next person' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Finish' })).toBeVisible();
 });
 test('touch layout fits a narrow screen', async ({ browser }) => {
   const context = await browser.newContext({ viewport: { width: 375, height: 812 }, hasTouch: true, isMobile: true });
@@ -122,5 +122,5 @@ test('main actions fit a landscape laptop screen', async ({ page }) => {
     await page.getByRole('radio').nth(i % 4).check();
     await next.click();
   }
-  await expect(page.getByRole('button', { name: 'Next person' })).toBeInViewport({ ratio: 1 });
+  await expect(page.getByRole('button', { name: 'Finish' })).toBeInViewport({ ratio: 1 });
 });

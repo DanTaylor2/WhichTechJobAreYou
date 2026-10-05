@@ -8,7 +8,7 @@ There are no production dependencies or external assets. Copy the entire `site` 
 
 For the hosted version, open the GitHub Pages URL on each laptop while online. Before the event, disconnect and reload to verify the offline copy is ready. The service worker caches the site files, so the page can reload offline in that browser. Browser storage clearing or private browsing can remove the cache; keep the downloaded folder as the event backup.
 
-Use browser full-screen mode for the stand. Pupils can use touch, mouse or keyboard. Select **Next person** after each result to clear the answers and return to the start. **Start again** clears an unfinished quiz. Reloading also clears answers. There is no automatic timeout while a pupil is reading.
+Use browser full-screen mode for the stand. Pupils can use touch, mouse or keyboard. Select **Finish** after each result to clear the answers and return to the start. **Start again** clears an unfinished quiz. Reloading also clears answers. There is no automatic timeout while a pupil is reading.
 
 Before the event, try the quiz on the actual laptop and monitor arrangement, and check that the window appears on the touchscreen when touch input is needed. The two-minute estimate should be checked with a few pupils.
 

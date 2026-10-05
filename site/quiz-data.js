@@ -3,15 +3,103 @@
    Every role is a main role exactly three times across the six questions. */
 globalThis.TechQuiz = (() => {
   const roles = [
-    { id: 'ux', title: 'UX designer', short: 'Make services clear and easy to use.', description: 'A user experience designer makes websites and services easier for people to use. They try out ideas and improve them using feedback.', example: 'Make it easier for residents to report a broken streetlight on a council website.', ask: 'How do you check whether a website is easy to use?', strength: 'making things clear and easy to use' },
-    { id: 'research', title: 'User researcher', short: 'Find out what people need.', description: 'A user researcher listens to people and watches how they use services. Their findings help a team solve the right problems.', example: 'Talk to residents about what makes booking a library computer difficult.', ask: 'How do you find out what residents need?', strength: 'listening and understanding people' },
-    { id: 'dev', title: 'Software developer', short: 'Build useful things with code.', description: 'A software developer writes and tests code that makes websites and apps work. They turn an idea into something people can use.', example: 'Build a tool that helps residents find their bin collection day.', ask: 'What is something you have built that helps people?', strength: 'building things and trying out ideas' },
-    { id: 'data', title: 'Data analyst', short: 'Find patterns that help people decide.', description: 'A data analyst explores information, spots patterns and explains what they mean. Their work helps teams make better decisions.', example: 'Look at library visit numbers to help plan when activities should run.', ask: 'What can data tell you about how to improve a service?', strength: 'spotting patterns and using evidence' },
-    { id: 'security', title: 'Cyber security analyst', short: 'Help keep information and services safe.', description: 'A cyber security analyst looks for risks and helps protect computer systems. They investigate unusual activity and help people work safely.', example: 'Help protect residents’ information and spot suspicious sign-ins to council systems.', ask: 'How do you spot when something might be unsafe?', strength: 'checking carefully and thinking about risks' },
-    { id: 'architect', title: 'Technical architect', short: 'Plan how technology fits together.', description: 'A technical architect plans how different systems will work together. They help a team choose technology that meets people’s needs.', example: 'Plan how an online council form sends a request to the team who can help.', ask: 'How do you decide which pieces of technology will work together?', strength: 'planning and seeing how things connect' },
-    { id: 'systems', title: 'Systems engineer', short: 'Keep the technology running.', description: 'A systems engineer sets up and maintains the computers, networks and systems people rely on. They investigate problems and make things more reliable.', example: 'Keep library computers and their network working so residents can get online.', ask: 'How do you work out why a system has stopped working?', strength: 'working out how things work and fixing problems' },
-    { id: 'support', title: 'IT support technician', short: 'Help people get back up and running.', description: 'An IT support technician helps people solve everyday computer problems. They ask questions, explain clearly and find practical fixes.', example: 'Help a council worker get back into their account so they can respond to residents.', ask: 'How do you help someone who is stuck with a computer problem?', strength: 'helping people and explaining things' }
-  ];
+  {
+    "id": "ux",
+    "title": "UX designer",
+    "short": "Make websites easy to use.",
+    "description": "UX stands for user experience. A UX designer makes websites and apps easy to use. They test ideas with people to see what works best.",
+    "example": "Make it easy for people to report a broken streetlight on the council website.",
+    "ask": "How do you check whether a website is easy to use?",
+    "strength": "making things clear and easy to use",
+    "image": "./images/ux.jpg",
+    "imageAlt": "Two people planning ideas with sticky notes on a board.",
+    "explanationHeading": "What is a UX designer?"
+  },
+  {
+    "id": "research",
+    "title": "User researcher",
+    "short": "Find out what people need.",
+    "description": "A user researcher asks people about their needs. They watch people try a website or app. This helps the team find ways to make it better.",
+    "example": "Ask people what would make it easier to book a library computer.",
+    "ask": "How do you find out what residents need?",
+    "strength": "listening to people and learning what they need",
+    "image": "./images/research.jpg",
+    "imageAlt": "A group talking together around a laptop.",
+    "explanationHeading": "What is a user researcher?"
+  },
+  {
+    "id": "dev",
+    "title": "Software developer",
+    "short": "Build websites and apps.",
+    "description": "A software developer builds websites and apps. They write code, which is a set of steps for a computer to follow. They test it and fix mistakes.",
+    "example": "Build a tool that tells people which day to put their bins out.",
+    "ask": "What is something you have built that helps people?",
+    "strength": "building things and testing ideas",
+    "image": "./images/dev.jpg",
+    "imageAlt": "A person typing code on a laptop with another screen nearby.",
+    "explanationHeading": "What is a software developer?"
+  },
+  {
+    "id": "data",
+    "title": "Data analyst",
+    "short": "Use facts and numbers to find answers.",
+    "description": "A data analyst looks at facts and numbers to find patterns. They use charts to show what they find. This helps people decide what to do next.",
+    "example": "Count how many people visit a library to help plan the best times for clubs.",
+    "ask": "What can data tell you about how to improve a service?",
+    "strength": "spotting patterns and using facts",
+    "image": "./images/data.jpg",
+    "imageAlt": "Two people looking at charts on paper and a laptop.",
+    "explanationHeading": "What is a data analyst?"
+  },
+  {
+    "id": "security",
+    "title": "Cyber security analyst",
+    "short": "Keep computers and information safe.",
+    "description": "A cyber security analyst helps keep computers and information safe. They look for signs of trouble, like someone trying to break into an account. They help stop these attacks.",
+    "example": "Help keep names and addresses safe from people who should not see them.",
+    "ask": "How do you spot when something might be unsafe?",
+    "strength": "checking things carefully and spotting danger",
+    "image": "./images/security.jpg",
+    "imageAlt": "A laptop screen with the words Cyber Security.",
+    "explanationHeading": "What is a cyber security analyst?"
+  },
+  {
+    "id": "architect",
+    "title": "Technical architect",
+    "short": "Plan how computer tools work together.",
+    "description": "A technical architect plans how computer tools will work together. They choose the parts a team needs and show how to link them up.",
+    "example": "Plan how a form on the council website sends a message to the right team.",
+    "ask": "How do you decide which pieces of technology will work together?",
+    "strength": "planning and seeing how things fit together",
+    "image": "./images/architect.jpg",
+    "imageAlt": "A team planning together using boards in an office.",
+    "explanationHeading": "What is a technical architect?"
+  },
+  {
+    "id": "systems",
+    "title": "Systems engineer",
+    "short": "Keep computers working.",
+    "description": "A systems engineer sets up computers and keeps them working. They also look after the links between computers. When something breaks, they find out why and fix it.",
+    "example": "Keep library computers working so people can use the internet.",
+    "ask": "How do you work out why a system has stopped working?",
+    "strength": "finding out how things work and fixing problems",
+    "image": "./images/systems.jpg",
+    "imageAlt": "A person working at a computer beside racks of computer equipment.",
+    "explanationHeading": "What is a systems engineer?"
+  },
+  {
+    "id": "support",
+    "title": "IT support technician",
+    "short": "Help people fix computer problems.",
+    "description": "IT means information technology, such as computers and apps. An IT support technician helps people when these stop working. They ask questions and show people how to fix the problem.",
+    "example": "Help a council worker log in to their computer so they can answer questions from local people.",
+    "ask": "How do you help someone who is stuck with a computer problem?",
+    "strength": "helping people and explaining things",
+    "image": "./images/support.jpg",
+    "imageAlt": "A person wearing a headset and talking while using a computer.",
+    "explanationHeading": "What is an IT support technician?"
+  }
+];
   const a = (text, main, related) => ({ text, main, related });
   const questions = [
     { title: 'Your group is making a display about keeping the school clean. Which job would you choose?', answers: [

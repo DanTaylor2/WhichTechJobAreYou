@@ -1,7 +1,8 @@
 // Change the version whenever a site file changes so laptops get a fresh copy.
 const CACHE_PREFIX = `tech-careers-${self.registration.scope}-`;
-const CACHE_NAME = `${CACHE_PREFIX}v5`;
-const FILES = ['./', './index.html', './styles.css', './quiz-data.js', './app.js', './favicon.ico', './wirral-logo-white.png'];
+const CACHE_NAME = `${CACHE_PREFIX}v6`;
+const FILES = ['./', './index.html', './styles.css', './quiz-data.js', './app.js', './favicon.ico', './wirral-logo-white.png',
+  './images/ux.jpg', './images/research.jpg', './images/dev.jpg', './images/data.jpg', './images/security.jpg', './images/architect.jpg', './images/systems.jpg', './images/support.jpg'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(FILES)));
 });
