@@ -25,6 +25,7 @@ test('quiz validates, preserves edits, explains results and clears for the next 
   await complete(page);
   await expect(page.getByRole('heading', { name: 'Why this could suit you' })).toBeVisible();
   await expect(page.locator('.alternatives li')).toHaveCount(2);
+  await expect(page.getByRole('link', { name: 'National Careers Service' })).toHaveAttribute('href', 'https://nationalcareers.service.gov.uk/explore-careers');
   await accessible(page);
   await page.getByRole('button', { name: 'Change my answers' }).click();
   await expect(page.getByRole('radio').first()).toBeChecked();

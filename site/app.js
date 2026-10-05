@@ -86,6 +86,7 @@
         </aside>
       </div>
       <p class="result-note">This is a starting point. You can explore any of these jobs.</p>
+      <p class="career-link">Find out more about this career and other options on the <a href="https://nationalcareers.service.gov.uk/explore-careers">National Careers Service</a>.</p>
       <div class="actions"><button class="button" id="next-person">Next person <span aria-hidden="true">→</span></button><button class="text-button" id="change">Change my answers</button></div>`;
     main.querySelector('#next-person').addEventListener('click', () => showHome());
     main.querySelector('#change').addEventListener('click', () => { step = 0; showQuestion(); });
