@@ -1,6 +1,19 @@
 (() => {
   const { questions, roles, match } = TechQuiz;
   const main = document.querySelector('#main');
+  const avatars = [
+    ['coffee', 'Office worker holding a coffee mug'],
+    ['plant', 'Office worker holding a plant'],
+    ['headphones', 'Office worker wearing headphones'],
+    ['stationery', 'Office worker holding colourful pencils'],
+    ['planner', 'Office worker holding a planner'],
+    ['hoodie', 'Office worker wearing a blue hoodie'],
+    ['smart', 'Office worker wearing a smart blazer'],
+    ['snacks', 'Office worker offering snacks'],
+    ['multitasker', 'Office worker holding a phone and folders']
+  ];
+  const totalSteps = questions.length + 1;
+  let avatar;
   let answers = [];
   let step = 0;
   function focusHeading() {
@@ -11,6 +24,7 @@
   }
   function showHome(focus = true) {
     answers = [];
+    avatar = undefined;
     step = 0;
     document.title = 'Which tech job are you? | Wirral Council';
     main.innerHTML = `
@@ -19,27 +33,37 @@
           <p class="eyebrow">Weatherhead Careers Fair</p>
           <h1>Which tech job<br>are you?</h1>
           <p class="lead">Discover a job you could enjoy, and how you could help people in Wirral.</p>
-          <ul class="facts"><li>6 questions</li><li>About 2 minutes</li></ul>
+          <ul class="facts"><li>${totalSteps} questions</li><li>About 2 minutes</li></ul>
           <button class="button" id="start">Start the quiz <span aria-hidden="true">→</span></button>
         </section>
       </div>`;
     main.querySelector('#start').addEventListener('click', () => showQuestion());
     if (focus) focusHeading();
   }
+  function avatarPortrait(className = '') {
+    if (avatar === undefined) return '';
+    return `<img class="chosen-avatar ${className}" src="images/avatar-${avatars[avatar][0]}.png" alt="Your avatar: ${avatars[avatar][1]}" width="64" height="64">`;
+  }
   function showQuestion() {
-    const question = questions[step];
-    document.title = `Question ${step + 1} of 6 | Which tech job are you?`;
+    const choosingAvatar = step === 0;
+    const answerIndex = step - 1;
+    const question = questions[answerIndex];
+    const selected = choosingAvatar ? avatar : answers[answerIndex];
+    document.title = `Question ${step + 1} of ${totalSteps} | Which tech job are you?`;
     main.innerHTML = `
-      <div class="question-top"><p>Question ${step + 1} of ${questions.length}</p><button class="text-button" id="restart">Start again</button></div>
-      <div class="progress" aria-hidden="true"><span style="width: ${(step + 1) / questions.length * 100}%"></span></div>
+      <div class="question-top"><p>Question ${step + 1} of ${totalSteps}</p>${choosingAvatar ? '' : avatarPortrait()}<button class="text-button" id="restart">Start again</button></div>
+      <div class="progress" aria-hidden="true"><span style="width: ${(step + 1) / totalSteps * 100}%"></span></div>
       <form novalidate>
         <fieldset>
-          <legend><h1>${question.title}</h1></legend>
-          <p class="error" id="answer-error" role="alert" hidden>Choose an answer to continue.</p>
-          <div class="answers">${question.answers.map((answer, i) => `
-            <label class="answer"><input type="radio" name="answer" value="${i}" ${answers[step] === i ? 'checked' : ''}><span>${answer.text}</span></label>`).join('')}</div>
+          <legend><h1>${choosingAvatar ? 'Choose your avatar' : question.title}</h1></legend>
+          <p class="error" id="answer-error" role="alert" hidden>Choose ${choosingAvatar ? 'an avatar' : 'an answer'} to continue.</p>
+          <div class="answers ${choosingAvatar ? 'avatar-options' : ''}">${choosingAvatar
+            ? avatars.map(([id, label], i) => `
+              <label class="answer avatar-option"><input type="radio" name="answer" value="${i}" aria-label="${label}" ${selected === i ? 'checked' : ''}><img src="images/avatar-${id}.png" alt="" width="128" height="128"></label>`).join('')
+            : question.answers.map((answer, i) => `
+              <label class="answer"><input type="radio" name="answer" value="${i}" ${selected === i ? 'checked' : ''}><span>${answer.text}</span></label>`).join('')}</div>
         </fieldset>
-        <div class="actions"><button class="button" type="submit">${step === questions.length - 1 ? 'See my match' : 'Continue'} <span aria-hidden="true">→</span></button><button class="text-button" type="button" id="back">Back</button></div>
+        <div class="actions"><button class="button" type="submit">${step === totalSteps - 1 ? 'See my match' : 'Continue'} <span aria-hidden="true">→</span></button><button class="text-button" type="button" id="back">Back</button></div>
       </form>`;
     main.querySelector('#restart').addEventListener('click', () => showHome());
     main.querySelector('#back').addEventListener('click', () => {
@@ -48,21 +72,22 @@
     });
     const form = main.querySelector('form');
     form.addEventListener('change', event => {
-      answers[step] = Number(event.target.value);
+      if (choosingAvatar) avatar = Number(event.target.value);
+      else answers[answerIndex] = Number(event.target.value);
       main.querySelector('#answer-error').hidden = true;
       main.querySelector('fieldset').classList.remove('invalid');
       main.querySelector('fieldset').removeAttribute('aria-describedby');
     });
     form.addEventListener('submit', event => {
       event.preventDefault();
-      if (answers[step] === undefined) {
+      if ((choosingAvatar ? avatar : answers[answerIndex]) === undefined) {
         main.querySelector('#answer-error').hidden = false;
         main.querySelector('fieldset').classList.add('invalid');
         main.querySelector('fieldset').setAttribute('aria-describedby', 'answer-error');
         main.querySelector('input').focus();
         return;
       }
-      if (step < questions.length - 1) { step++; showQuestion(); }
+      if (step < totalSteps - 1) { step++; showQuestion(); }
       else showResult();
     });
     focusHeading();
@@ -70,7 +95,7 @@
   function showResult() {
     const { main: role, alternatives } = match(answers);
     document.title = role ? `${role.title} | Your tech job match` : 'Explore tech jobs | Wirral Council';
-    main.innerHTML = (role ? `
+    main.innerHTML = avatarPortrait('result-avatar') + (role ? `
       <div class="result-heading"><p>You could enjoy being a</p><h1>${role.title}</h1></div>
       <div class="result-grid">
         <section aria-label="About your match">

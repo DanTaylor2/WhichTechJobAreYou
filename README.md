@@ -1,6 +1,6 @@
 # Which tech job are you?
 
-A Wirral Council careers-fair quiz for pupils in years 7 to 13. Six short questions take around two minutes and suggest one public-sector tech career and up to two alternatives.
+A Wirral Council careers-fair quiz for pupils in years 7 to 13. An avatar choice followed by six short questions takes around two minutes and suggest one public-sector tech career and up to two alternatives.
 
 ## Run it at the event
 
@@ -45,7 +45,9 @@ The unit tests check all 15,625 answer combinations, including unsure answers, s
 
 Edit the eight role profiles and six questions in `site/quiz-data.js`. Each scored choice awards three points to a primary role and one point to a related role. Every role appears three times as a primary choice across the quiz. Related roles reflect the interest in each answer, so their frequency varies. The shared question set uses school and everyday situations without requiring previous tech experience. “Not sure yet” awards no points. The result is the role with the most points, followed by up to two alternatives that also received points. If every answer is unsure, the result invites pupils to explore all eight jobs or change their answers, without claiming a match. Ties use primary-choice counts and then a deterministic ordering derived from the scored answers. Unsure answers do not affect that ordering. This is an exploratory activity, not a validated careers assessment; it makes no aptitude or suitability claim.
 
-Answers live only in page memory. The app has no analytics, forms that submit data, cookies, accounts or answer storage. The offline cache stores public site files only. GitHub Pages provides the hosting and may maintain its own request logs.
+The first of seven steps requires a choice of nine cartoon office-worker avatars. This is purely cosmetic and never affects matching. The avatar appears throughout the scored questions and on either result screen. Choices have no visible labels and have accessible names for screen readers.
+
+Answers and the chosen avatar live only in page memory. The app has no analytics, forms that submit data, cookies, accounts or answer storage. The offline cache stores public site files only. GitHub Pages provides the hosting and may maintain its own request logs.
 
 The layout follows GDS conventions for typography, buttons, radio groups, focus states and plain language. It uses an Arial system font and the official Wirral Council logo, with no external fonts or copied government crest. The palette uses the green from [Wirral Council's website](https://www.wirral.gov.uk/), with darker shades for text contrast. The Council favicon is saved locally in `site/favicon.ico`.
 

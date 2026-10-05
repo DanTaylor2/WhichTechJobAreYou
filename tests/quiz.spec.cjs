@@ -2,7 +2,12 @@ const { test, expect } = require('@playwright/test');
 const AxeBuilder = require('@axe-core/playwright').default;
 const { pathToFileURL } = require('node:url');
 const path = require('node:path');
+async function chooseAvatar(page, index = 0) {
+  await page.getByRole('radio').nth(index).check();
+  await page.getByRole('button', { name: 'Continue' }).click();
+}
 async function complete(page) {
+  if (await page.getByRole('heading', { name: 'Choose your avatar' }).count()) await chooseAvatar(page);
   for (let i = 0; i < 6; i++) {
     await page.getByRole('radio').nth(i % 4).check();
     await page.getByRole('button', { name: i === 5 ? 'See my match' : 'Continue' }).click();
@@ -14,6 +19,7 @@ async function accessible(page) {
 test('unsure answers allow exploring jobs, editing into a match and resetting', async ({ page }) => {
   await page.goto('/');
   await page.getByRole('button', { name: 'Start the quiz' }).click();
+  await chooseAvatar(page);
   for (let i = 0; i < 6; i++) {
     await page.getByRole('radio', { name: 'Not sure yet' }).check();
     await page.getByRole('button', { name: i === 5 ? 'See my match' : 'Continue' }).click();
@@ -23,6 +29,7 @@ test('unsure answers allow exploring jobs, editing into a match and resetting', 
   await expect(page.getByRole('heading', { name: 'Why this could suit you' })).toHaveCount(0);
   await accessible(page);
   await page.getByRole('button', { name: 'Change my answers' }).click();
+  await page.getByRole('button', { name: 'Continue' }).click();
   await expect(page.getByRole('radio', { name: 'Not sure yet' })).toBeChecked();
   await page.getByRole('radio').first().check();
   for (let i = 0; i < 6; i++) {
@@ -33,6 +40,7 @@ test('unsure answers allow exploring jobs, editing into a match and resetting', 
   await expect(page.locator('.alternatives')).toContainText('UX designer');
   await accessible(page);
   await page.getByRole('button', { name: 'Change my answers' }).click();
+  await page.getByRole('button', { name: 'Continue' }).click();
   await page.getByRole('radio', { name: 'Not sure yet' }).check();
   for (let i = 0; i < 6; i++) {
     await page.getByRole('button', { name: i === 5 ? 'See my match' : 'Continue' }).click();
@@ -59,6 +67,7 @@ test('quiz validates, preserves edits, explains results and clears for the next 
   await expect(page.getByRole('link', { name: 'National Careers Service' })).toHaveAttribute('href', 'https://nationalcareers.service.gov.uk/explore-careers');
   await accessible(page);
   await page.getByRole('button', { name: 'Change my answers' }).click();
+  await page.getByRole('button', { name: 'Continue' }).click();
   await expect(page.getByRole('radio').first()).toBeChecked();
   await page.getByRole('button', { name: 'Start again' }).click();
   await page.getByRole('button', { name: 'Start the quiz' }).click();
@@ -75,12 +84,16 @@ test('cached project site reloads and finishes without a connection', async ({ p
   await context.setOffline(true);
   await page.reload();
   await page.getByRole('button', { name: 'Start the quiz' }).click();
+  await expect(page.locator('.avatar-option img')).toHaveCount(9);
+  await expect.poll(() => page.locator('.avatar-option img').evaluateAll(images => images.every(image => image.complete && image.naturalWidth > 0))).toBe(true);
   await complete(page);
   await expect(page.getByRole('button', { name: 'Finish' })).toBeVisible();
 });
 test('downloaded site works directly from disk with no server', async ({ page }) => {
   await page.goto(pathToFileURL(path.resolve('site/index.html')).href);
   await page.getByRole('button', { name: 'Start the quiz' }).click();
+  await expect(page.locator('.avatar-option img')).toHaveCount(9);
+  await expect.poll(() => page.locator('.avatar-option img').evaluateAll(images => images.every(image => image.complete && image.naturalWidth > 0))).toBe(true);
   await complete(page);
   await expect(page.getByRole('button', { name: 'Finish' })).toBeVisible();
 });
@@ -88,7 +101,7 @@ test('keyboard users can complete the quiz', async ({ page }) => {
   await page.goto('/');
   await page.getByRole('button', { name: 'Start the quiz' }).focus();
   await page.keyboard.press('Enter');
-  for (let i = 0; i < 6; i++) {
+  for (let i = 0; i < 7; i++) {
     await page.keyboard.press('Tab');
     await page.keyboard.press('Space');
     await expect(page.getByRole('radio').first()).toBeChecked();
@@ -116,6 +129,8 @@ test('main actions fit a landscape laptop screen', async ({ page }) => {
   await page.goto('/');
   await expect(page.getByRole('button', { name: 'Start the quiz' })).toBeInViewport({ ratio: 1 });
   await page.getByRole('button', { name: 'Start the quiz' }).click();
+  await expect(page.getByRole('button', { name: 'Continue' })).toBeInViewport({ ratio: 1 });
+  await chooseAvatar(page);
   for (let i = 0; i < 6; i++) {
     const next = page.getByRole('button', { name: i === 5 ? 'See my match' : 'Continue' });
     await expect(next).toBeInViewport({ ratio: 1 });
@@ -123,4 +138,25 @@ test('main actions fit a landscape laptop screen', async ({ page }) => {
     await next.click();
   }
   await expect(page.getByRole('button', { name: 'Finish' })).toBeInViewport({ ratio: 1 });
+});
+
+test('nine cosmetic avatars preserve scoring and can be changed', async ({ page }) => {
+  await page.goto('/');
+  await page.getByRole('button', { name: 'Start the quiz' }).click();
+  await expect(page.getByRole('radio')).toHaveCount(9);
+  await expect(page.locator('input:checked')).toHaveCount(0);
+  await expect(page.locator('.avatar-options')).toHaveText('');
+  await expect(page).toHaveTitle('Question 1 of 7 | Which tech job are you?');
+  await chooseAvatar(page, 8);
+  await expect(page).toHaveTitle('Question 2 of 7 | Which tech job are you?');
+  await expect(page.locator('.chosen-avatar')).toHaveAttribute('src', 'images/avatar-multitasker.png');
+  await complete(page);
+  const result = await page.getByRole('heading', { level: 1 }).textContent();
+  await expect(page.locator('.result-avatar')).toHaveAttribute('src', 'images/avatar-multitasker.png');
+  await page.getByRole('button', { name: 'Change my answers' }).click();
+  await expect(page.getByRole('radio').nth(8)).toBeChecked();
+  await chooseAvatar(page, 1);
+  await complete(page);
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText(result);
+  await expect(page.locator('.result-avatar')).toHaveAttribute('src', 'images/avatar-plant.png');
 });
